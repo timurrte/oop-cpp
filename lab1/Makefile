@@ -1,12 +1,12 @@
 # Variables
 CXX = g++
-CXXFLAGS = -Wall $(shell pkg-config --cflags gtkmm-4.0)
-LDFLAGS = $(shell pkg-config --libs gtkmm-4.0)
-SOURCES = main.cc helloworld.cc
+CXXFLAGS = -Wall -g 
+LDFLAGS = 
+SOURCES = main.cc
 OBJECTS = $(SOURCES:.cc=.o)
 DEPENDS = $(OBJECTS:.o=.d)
 BUILD_DIR = build
-TARGET = $(BUILD_DIR)/test
+TARGET = $(BUILD_DIR)/app
 
 # Default target
 all: $(TARGET)
