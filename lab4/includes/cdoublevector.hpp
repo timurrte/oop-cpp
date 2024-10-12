@@ -1,6 +1,12 @@
 #ifndef CDOUBLE_VECTOR
 #define CDOUBLE_VECTOR
 
+#ifndef LIBS
+#define LIBS
+#include "libs.hpp"
+#endif
+
+using namespace std;
 class CDoubleVector
 {
     private:
@@ -26,5 +32,11 @@ class CDoubleVector
 
 
         double calculate();
+        double calculate(string fileName);
+
+        void saveData(string fileName);
+        void loadData(string fileName);
+
+        void saveResult(double data, string fileName);
 };
 #endif

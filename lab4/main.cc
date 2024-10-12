@@ -1,6 +1,8 @@
+#ifndef LIBS
+#define LIBS
 #include "includes/libs.hpp"
-
-#define MAX 11
+#endif
+#define MAX 4
 #define CLEAR_CIN cin.ignore(255, '\n')
 
 using namespace std;
@@ -25,11 +27,16 @@ int main(int argc, char* argv[])
     for (i=0; i<MAX; i++) cout << test.get(i) << " ";
     cout << endl;
 
-    cout << "Average value: " << vector->getAvgValue() << endl;
-
-    cout << "Calculation: " << vector->calculate() << endl;
-
+    vector->saveData("hello.dat");
     delete vector;
+
+    CDoubleVector* vector2 = new CDoubleVector(MAX);
+    vector2->loadData("hello.dat");
+    cout << "Average value: " << vector2->getAvgValue() << endl;
+
+    double result = vector2->calculate("result.dat");
+    cout << "Calculation: " << result << endl;
+    delete vector2;
 
     return 0;
 }
