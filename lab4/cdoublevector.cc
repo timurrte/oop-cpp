@@ -96,42 +96,49 @@ double CDoubleVector::calculate(string fileName) {
 }
 
 void CDoubleVector::saveData(string fileName) {
-    ofstream fout(fileName);
+    ofstream fout(fileName, ios::binary);
     if (fout.is_open()) {
-        for (int i = 0; i < m_size; i++) {
-            fout << m_pData[i] << std::endl;
-        }
+        // Write the size of the data first
+        fout.write(reinterpret_cast<const char*>(&m_size), sizeof(m_size));
+        
+        // Write the actual data
+        fout.write(reinterpret_cast<const char*>(m_pData), m_size * sizeof(double));
+        
         fout.close();
-    } else {
-        std::cout << "There was an error opening file" << std::endl;
-    }
-}
-
-void CDoubleVector::loadData(string fileName) {
-    ifstream fin(fileName);
-    if (fin.is_open()) {
-        delete[] m_pData;
-        m_size = 0;
-
-        double value;
-        // Read from file to vector
-        while (fin >> value) {
-            m_pData[m_size] = value;
-            m_size++;
-        }     
-        fin.close();
     } else {
         std::cout << "There was an error opening the file" << std::endl;
     }
 }
 
+
+void CDoubleVector::loadData(string fileName) {
+    ifstream fin(fileName, ios::binary);
+    if (fin.is_open()) {
+        delete[] m_pData; // Clear existing data
+        m_size = 0; // Reset size
+
+        // Read size first
+        fin.read(reinterpret_cast<char*>(&m_size), sizeof(m_size));
+        
+        // Allocate memory for m_pData
+        m_pData = new double[m_size];
+
+        // Read the data
+        fin.read(reinterpret_cast<char*>(m_pData), m_size * sizeof(double));
+        
+        fin.close();
+    } else {
+        cout << "There was an error opening the file" << endl;
+    }
+}
+
 void CDoubleVector::saveResult(double data, string fileName) {
     ofstream fout(fileName);
-
+    
     if (fout.is_open()) {
         fout << data;
         fout.close();
     } else {
-        std::cout << "There was an error opening file" << std::endl;
+        cout << "There was an error opening the file" << endl;
     }
 }
