@@ -40,6 +40,7 @@ double Parallelepiped::get_area() {
 void Parallelepiped::calculate_area() {
     this->area = this->a * this->b;
 }
+
 void Parallelepiped::print_info() {
     std::print("Параралеліпіпед:\na = {}; b = {}; h = {}; area = {:.3f}; volume = {:.3f}\n", 
     this->a, this->b, this->h, this->get_area(), this->get_v());

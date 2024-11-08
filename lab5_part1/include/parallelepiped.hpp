@@ -6,6 +6,7 @@ class Parallelepiped: public Figure {
         double a, b;
         double h;
         double area;
+        void calculate_area();
 
     public:
         Parallelepiped(double a, double b, double h);
@@ -17,7 +18,6 @@ class Parallelepiped: public Figure {
         double get_b();
         double get_h();
 
-        void calculate_area();
         double get_area();
 
         void print_info();

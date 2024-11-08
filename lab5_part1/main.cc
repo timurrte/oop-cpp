@@ -10,7 +10,11 @@ int main() {
 
     Parallelepiped par(3.1, 5.7, 3.2);
     par.print_info();
+    par.set_b(2);
+    par.print_info();
 
     Sphere sph(5.3);
+    sph.print_info();
+    sph.set_r(5);
     sph.print_info();
 }
