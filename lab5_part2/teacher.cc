@@ -1,6 +1,7 @@
 #include "include/teacher.hpp"
 #include "include/tax.hpp"
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <fstream>
 
@@ -57,20 +58,50 @@ void Teacher::displaySalaryInfo() const {
     cout << "Розмір зарплати: " << getNetSalary() << " грн" << endl;
 }
 
-void Teacher::searchByFullName(const string& fullName, const string& filename){
+void Teacher::searchByFullName(const string& fullName, const string& filename) {
     ifstream file(filename);
     string line;
 
     bool found = false;
+    
     while (getline(file, line)) {
-        if (line.find(fullName) != string::npos) {
-            cout << "Знайдено викладача: " << line << endl;
+        // Створюємо стрім для розбору рядка
+        stringstream ss(line);
+        string prefix, surname, name, patronymic;
+        int departmentNumber, yearOfEmployment;
+        double baseSalary, vacationPayment, materialAid, additionalPayment, netSalary;
+        
+        // Зчитуємо значення з рядка
+        ss >> prefix >> surname >> name >> patronymic 
+           >> departmentNumber >> yearOfEmployment 
+           >> baseSalary >> vacationPayment 
+           >> materialAid >> additionalPayment >> netSalary;
+        
+        // Формуємо повне ім'я викладача
+        string currentFullName = surname + " " + name + " " + patronymic;
+
+        // Перевіряємо, чи співпадає повне ім'я
+        if (currentFullName == fullName) {
+            cout << "Знайдено викладача: " << endl;
+            cout << "Прізвище: " << surname << endl;
+            cout << "Ім'я: " << name << endl;
+            cout << "По батькові: " << patronymic << endl;
+            cout << "Номер кафедри: " << departmentNumber << endl;
+            cout << "Рік прийняття на роботу: " << yearOfEmployment << endl;
+            cout << "Базова заробітна плата: " << baseSalary << endl;
+            cout << "Оплата відпустки: " << vacationPayment << endl;
+            cout << "Матеріальна допомога: " << materialAid << endl;
+            cout << "Додаткова оплата: " << additionalPayment << endl;
+            cout << "Чиста заробітна плата: " << netSalary << endl;
+            
             found = true;
-            break; 
+            break;
         }
     }
 
     if (!found) {
         cout << "Викладача не знайдено." << endl;
     }
+    
+    file.close();
 }
