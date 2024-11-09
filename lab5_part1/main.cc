@@ -17,4 +17,6 @@ int main() {
     sph.print_info();
     sph.set_r(5);
     sph.print_info();
+    sph.set_v(45);
+    sph.print_info();
 }
